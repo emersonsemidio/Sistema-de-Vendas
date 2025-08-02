@@ -1,14 +1,14 @@
 package com.projeto.sistema.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
-@RestController
+@Controller
 public class MainController {
 
   @GetMapping("/hello")
   public String hello() {
-    return "Hello, World!";
+    return "administrativo/home";
   }
   
 }
