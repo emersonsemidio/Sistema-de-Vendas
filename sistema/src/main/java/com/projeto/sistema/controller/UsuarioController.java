@@ -1,8 +1,10 @@
 package com.projeto.sistema.controller;
 
+import com.projeto.sistema.dto.LoginRequest;
 import com.projeto.sistema.model.Usuario;
 import com.projeto.sistema.service.ServiceUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,7 @@ public class UsuarioController {
 
     @Autowired
     private ServiceUsuario usuarioService;
+
 
     @GetMapping
     public ResponseEntity<Iterable<Usuario>> listarTodos() {
@@ -46,4 +49,15 @@ public class UsuarioController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        try {
+            Usuario usuario = usuarioService.login(loginRequest.getEmail(), loginRequest.getSenha());
+            return ResponseEntity.ok(usuario);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login inválido");
+        }
+    }
+
 }

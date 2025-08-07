@@ -13,6 +13,17 @@ public class ServiceUsuario {
     @Autowired
     private RepoUsuario usuarioRepository;
 
+    public Usuario login(String email, String senha) {
+    Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
+
+    if (usuario.isPresent() && usuario.get().getSenha().equals(senha)) {
+        return usuario.get(); // ou gerar token, etc
+    } else {
+        throw new RuntimeException("Email ou senha inválidos");
+    }
+}
+
+
     public Iterable<Usuario> listarTodos() {
         return usuarioRepository.findAll();
     }

@@ -3,6 +3,7 @@ package com.projeto.sistema.service;
 import com.projeto.sistema.model.Venda;
 import com.projeto.sistema.repo.RepoVenda;
 import com.projeto.sistema.repo.RepoCliente;
+import com.projeto.sistema.repo.RepoUsuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class ServiceVenda {
     private RepoVenda repoVenda;
 
     @Autowired
+    private RepoUsuario repoUsuario;
+
+    @Autowired
     private RepoCliente repoCliente;
 
     public Iterable<Venda> listarTodas() {
@@ -28,11 +32,20 @@ public class ServiceVenda {
     }
 
     public Venda salvar(Venda venda) {
-        if(!repoCliente.existsById(venda.getClienteId())) {
-            throw new IllegalArgumentException("Cliente com ID " + venda.getClienteId() + " não existe.");
-        }   
-        return repoVenda.save(venda);
+    boolean clienteExiste = repoCliente.existsById(venda.getClienteId());
+    boolean usuarioExiste = repoUsuario.existsById(venda.getUsuarioId());
+
+    if (!clienteExiste && !usuarioExiste) {
+        throw new IllegalArgumentException("Cliente com ID " + venda.getClienteId() + " e Usuário com ID " + venda.getUsuarioId() + " não existem.");
+    } else if (!clienteExiste) {
+        throw new IllegalArgumentException("Cliente com ID " + venda.getClienteId() + " não existe.");
+    } else if (!usuarioExiste) {
+        throw new IllegalArgumentException("Usuário com ID " + venda.getUsuarioId() + " não existe.");
     }
+
+    return repoVenda.save(venda);
+}
+
 
     public Optional<Venda> atualizar(Long id, Venda novaVenda) {
         return repoVenda.findById(id).map(vendaExistente -> {
