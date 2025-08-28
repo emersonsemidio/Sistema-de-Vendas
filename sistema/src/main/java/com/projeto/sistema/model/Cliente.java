@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "clientes")
+@Table(name = "cliente")
 public class Cliente {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +34,9 @@ public class Cliente {
   @NotBlank(message = "O campo é obrigatorio")
   @Size(min = 11, max = 14, message = "O campo deve ter entre 11 e 14 caracteres")
   private String cpf;
+
+  public Cliente() {}
+
 
   // Getters and Setters
 
@@ -83,6 +86,17 @@ public class Cliente {
 
   public void setCpf(String cpf) {
     this.cpf = cpf;
+  }
+
+  public String toString() {
+    return "Cliente{" +
+            "id=" + id +
+            ", nome='" + nome + '\'' +
+            ", email='" + email + '\'' +
+            ", telefone='" + telefone + '\'' +
+            ", endereco='" + endereco + '\'' +
+            ", cpf='" + cpf + '\'' +
+            '}';
   }
 
 }

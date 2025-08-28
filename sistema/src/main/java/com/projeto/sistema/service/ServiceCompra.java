@@ -1,21 +1,20 @@
 package com.projeto.sistema.service;
 
-import com.projeto.sistema.model.Venda;
-import com.projeto.sistema.repo.RepoVenda;
+import com.projeto.sistema.model.Compras;
+import com.projeto.sistema.repo.RepoCompra;
 import com.projeto.sistema.repo.RepoCliente;
 import com.projeto.sistema.repo.RepoUsuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ServiceVenda {
+public class ServiceCompra {
 
     @Autowired
-    private RepoVenda repoVenda;
+    private RepoCompra repoCompra;
 
     @Autowired
     private RepoUsuario repoUsuario;
@@ -23,15 +22,15 @@ public class ServiceVenda {
     @Autowired
     private RepoCliente repoCliente;
 
-    public Iterable<Venda> listarTodas() {
-        return repoVenda.findAll();
+    public Iterable<Compras> listarTodas() {
+        return repoCompra.findAll();
     }
 
-    public Optional<Venda> buscarPorId(Long id) {
-        return repoVenda.findById(id);
+    public Optional<Compras> buscarPorId(Long id) {
+        return repoCompra.findById(id);
     }
 
-    public Venda salvar(Venda venda) {
+    public Compras salvar(Compras venda) {
     boolean clienteExiste = repoCliente.existsById(venda.getClienteId());
     boolean usuarioExiste = repoUsuario.existsById(venda.getUsuarioId());
 
@@ -43,24 +42,24 @@ public class ServiceVenda {
         throw new IllegalArgumentException("Usuário com ID " + venda.getUsuarioId() + " não existe.");
     }
 
-    return repoVenda.save(venda);
+    return repoCompra.save(venda);
 }
 
 
-    public Optional<Venda> atualizar(Long id, Venda novaVenda) {
-        return repoVenda.findById(id).map(vendaExistente -> {
-            vendaExistente.setClienteId(novaVenda.getClienteId());
-            vendaExistente.setTotal(novaVenda.getTotal());
-            vendaExistente.setUsuarioId(novaVenda.getUsuarioId());
-            vendaExistente.setFormaPagamento(novaVenda.getFormaPagamento());
-            vendaExistente.setStatus(novaVenda.getStatus());
-            return repoVenda.save(vendaExistente);
+    public Optional<Compras> atualizar(Long id, Compras novaCompra) {
+        return repoCompra.findById(id).map(compraExistente -> {
+            compraExistente.setClienteId(novaCompra.getClienteId());
+            compraExistente.setTotal(novaCompra.getTotal());
+            compraExistente.setUsuarioId(novaCompra.getUsuarioId());
+            compraExistente.setFormaPagamento(novaCompra.getFormaPagamento());
+            compraExistente.setStatus(novaCompra.getStatus());
+            return repoCompra.save(compraExistente);
         });
     }
 
     public boolean deletar(Long id) {
-        if (repoVenda.existsById(id)) {
-            repoVenda.deleteById(id);
+        if (repoCompra.existsById(id)) {
+            repoCompra.deleteById(id);
             return true;
         }
         return false;

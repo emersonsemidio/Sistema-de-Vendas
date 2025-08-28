@@ -61,12 +61,20 @@ onMounted(async () => {
 })
 
 function adicionarAoCarrinho(produto) {
-  if (!carrinhoPopupRef.value) return;
+  if (!carrinhoPopupRef.value) {
+    console.error("Referência do carrinho não encontrada");
+    return;
+  }
   
-  // Chama a função exposta pelo CarrinhoPopup
-  carrinhoPopupRef.value.adicionarItem(produto);
+  // Chama o método correto
+  carrinhoPopupRef.value.adicionarProduto(produto);
   
-  alert(`${produto.nome} adicionado ao carrinho!`);
+  // Feedback visual
+  const button = event.target;
+  button.textContent = '✔ Adicionado';
+  setTimeout(() => {
+    button.textContent = 'Adicionar ao Carrinho';
+  }, 1000);
 }
 </script>
 

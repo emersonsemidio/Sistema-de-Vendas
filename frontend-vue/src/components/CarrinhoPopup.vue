@@ -42,14 +42,23 @@
 import { computed } from 'vue';
 
 const props = defineProps({
-  itens: {
-    type: Array,
-    required: true,
-    default: () => []
-  }
+  itens: Array
 });
 
-const emit = defineEmits(['fechar', 'atualizar-itens']);
+const emit = defineEmits(['fechar', 'atualizar-itens', 'finalizar-compra']);
+
+// Ações do carrinho
+function aumentarQuantidade(index) {
+  const novosItens = [...props.itens];
+  novosItens[index].quantidade++;
+  emit('atualizar-itens', novosItens);
+}
+
+function removerItem(index) {
+  const novosItens = [...props.itens];
+  novosItens.splice(index, 1);
+  emit('atualizar-itens', novosItens);
+}
 
 // Função segura para formatar preços
 const formatarPreco = (valor) => {
@@ -63,12 +72,6 @@ const total = computed(() => {
   }, 0);
 });
 
-// Funções de manipulação do carrinho
-function aumentarQuantidade(index) {
-  const novosItens = [...props.itens];
-  novosItens[index].quantidade++;
-  emit('atualizar-itens', novosItens);
-}
 
 function diminuirQuantidade(index) {
   const novosItens = [...props.itens];
@@ -78,15 +81,34 @@ function diminuirQuantidade(index) {
   }
 }
 
-function removerItem(index) {
-  const novosItens = [...props.itens];
-  novosItens.splice(index, 1);
-  emit('atualizar-itens', novosItens);
-}
-
 function finalizarCompra() {
   alert('Compra finalizada!');
   emit('fechar');
+
+
+  function adicionarProduto(produto) {
+  const novosItens = [...props.itens];
+  const itemExistente = novosItens.find(item => item.id === produto.id);
+  
+  if (itemExistente) {
+    itemExistente.quantidade++;
+  } else {
+    novosItens.push({
+      id: produto.id,
+      nome: produto.nome,
+      preco: produto.preco,
+      quantidade: 1
+    });
+  }
+  
+  emit('atualizar-itens', novosItens);
+}
+
+// Exponha o método para o componente pai
+defineExpose({
+  adicionarProduto
+});
+
 }
 </script>
 
