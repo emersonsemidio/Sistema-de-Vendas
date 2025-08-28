@@ -1,6 +1,9 @@
+# render.yaml
 services:
   - type: web
     name: sistema-vendas-backend
     plan: free
     runtime: docker
     rootDir: sistema
+    # SEM buildCommand e SEM startCommand!
+    # O Dockerfile multi-stage cuida de tudo
