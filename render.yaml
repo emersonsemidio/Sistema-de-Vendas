@@ -2,7 +2,7 @@ services:
   - type: web
     name: sistema-vendas-backend
     plan: free
-    env: java
+    runtime: docker
     rootDir: sistema
     buildCommand: ./mvnw clean package -DskipTests
-    startCommand: java -jar target/*.jar --server.port=$PORT
+    startCommand: java -jar target/sistema-0.0.1-SNAPSHOT.jar --server.port=$PORT
