@@ -10,4 +10,4 @@ COPY target/sistema-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 10000
 
 # Comando para executar a aplicação
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=10000"]
