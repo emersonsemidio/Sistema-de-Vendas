@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/cliente")
@@ -22,10 +23,11 @@ public class ClienteController {
     @Autowired
     private ServiceCliente serviceCliente;
 
+    @Valid
     @PostMapping
     @Operation(summary = "Criar novo cliente")
     @ApiResponse(responseCode = "200", description = "Cliente criado com sucesso")
-    public ResponseEntity<Cliente> salvar(@RequestBody Cliente cliente) {
+    public ResponseEntity<Cliente> salvar(@RequestBody @Valid Cliente cliente) {
         Cliente salvo = serviceCliente.salvar(cliente);
         return ResponseEntity.ok(salvo);
     }
