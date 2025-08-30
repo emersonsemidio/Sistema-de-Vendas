@@ -1,13 +1,19 @@
 package com.projeto.sistema.service;
 
+import com.projeto.sistema.dto.ClienteUpdateDTO;
 import com.projeto.sistema.model.Cliente;
 import com.projeto.sistema.repo.RepoCliente;
+
+import jakarta.transaction.Transactional;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ServiceCliente {
 
     @Autowired
@@ -29,13 +35,37 @@ public class ServiceCliente {
     }
 
     // Atualizar (só salva se o ID já existir)
-    public Optional<Cliente> atualizar(Long id, Cliente clienteAtualizado) {
+
+    public Optional<Cliente> atualizar(Long id, ClienteUpdateDTO dto) {
         return repoCliente.findById(id).map(clienteExistente -> {
-            clienteAtualizado.setId(id); // garante que o ID se mantém
-            return repoCliente.save(clienteAtualizado);
+            
+            if (dto.getNome() != null) {
+                clienteExistente.setNome(dto.getNome());
+            }
+            if (dto.getEmail() != null) {
+                clienteExistente.setEmail(dto.getEmail());
+            }
+            if (dto.getTelefone() != null) {
+                clienteExistente.setTelefone(dto.getTelefone());
+            }
+            if (dto.getEndereco() != null) {
+                clienteExistente.setEndereco(dto.getEndereco());
+            }
+            
+            return repoCliente.save(clienteExistente);
         });
     }
 
+    public Cliente convertUpdateDtoToEntity(ClienteUpdateDTO dto) {
+        Cliente cliente = new Cliente();
+        // Apenas seta os campos que vieram no DTO
+        cliente.setNome(dto.getNome()); // Pode ser null - não problema
+        cliente.setEmail(dto.getEmail());
+        cliente.setTelefone(dto.getTelefone());
+        cliente.setEndereco(dto.getEndereco());
+        return cliente;
+    }
+    
     // Remover
     public boolean deletar(Long id) {
         if (repoCliente.existsById(id)) {
