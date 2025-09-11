@@ -15,19 +15,14 @@ public class Cliente {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Size(min = 3, max = 50, message = "O campo deve ter entre 3 e 50 caracteres")
   private String nome;
 
-  @Size(min = 3, max = 50, message = "O campo deve ter entre 3 e 50 caracteres")
   private String email;
 
-  @Size(min = 3, max = 50, message = "O campo deve ter entre 3 e 50 caracteres")
   private String telefone;
 
-  @Size(min = 3, max = 100, message = "O campo deve ter entre 3 e 100 caracteres")
   private String endereco;
 
-  @Size(min = 11, max = 14, message = "O campo deve ter entre 11 e 14 caracteres")
   private String cpf;
 
   public Cliente() {}

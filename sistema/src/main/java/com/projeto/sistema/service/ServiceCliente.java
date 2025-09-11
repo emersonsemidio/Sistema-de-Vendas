@@ -1,12 +1,12 @@
 package com.projeto.sistema.service;
 
 import com.projeto.sistema.dto.ClienteUpdateDTO;
+import com.projeto.sistema.dto.ClienteRegisterDto;
 import com.projeto.sistema.model.Cliente;
 import com.projeto.sistema.repo.RepoCliente;
 
 import jakarta.transaction.Transactional;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,6 +63,17 @@ public class ServiceCliente {
         cliente.setEmail(dto.getEmail());
         cliente.setTelefone(dto.getTelefone());
         cliente.setEndereco(dto.getEndereco());
+        return cliente;
+    }
+
+    public Cliente convertRegisterDtoToEntity(ClienteRegisterDto dto) {
+        Cliente cliente = new Cliente();
+        // Apenas seta os campos que vieram no DTO
+        cliente.setNome(dto.getNome()); // Pode ser null - não problema
+        cliente.setEmail(dto.getEmail());
+        cliente.setTelefone(dto.getTelefone());
+        cliente.setEndereco(dto.getEndereco());
+        cliente.setCpf(dto.getCpf());
         return cliente;
     }
     

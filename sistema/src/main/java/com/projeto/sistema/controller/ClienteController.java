@@ -1,10 +1,13 @@
 package com.projeto.sistema.controller;
 
+import com.projeto.sistema.dto.ClienteRegisterDto;
 import com.projeto.sistema.dto.ClienteUpdateDTO;
+import com.projeto.sistema.dto.MensagemResponseDto;
 import com.projeto.sistema.model.Cliente;
 import com.projeto.sistema.service.ServiceCliente;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,9 +29,19 @@ public class ClienteController {
     @PostMapping
     @Operation(summary = "Criar novo cliente")
     @ApiResponse(responseCode = "200", description = "Cliente criado com sucesso")
-    public ResponseEntity<Cliente> salvar(@RequestBody @Valid Cliente cliente) {
-        Cliente salvo = serviceCliente.salvar(cliente);
-        return ResponseEntity.ok(salvo);
+    public ResponseEntity<MensagemResponseDto> salvar(@RequestBody @Valid ClienteRegisterDto clienteDto) {
+        try {
+            Cliente cliente = serviceCliente.convertRegisterDtoToEntity(clienteDto);
+            Cliente salvo = serviceCliente.salvar(cliente);
+            MensagemResponseDto mensagem = new MensagemResponseDto("Cliente criado com sucesso", "200", salvo);
+            return ResponseEntity.ok(mensagem);
+
+        } catch (Exception e) {
+            MensagemResponseDto errorResponse = new MensagemResponseDto(
+                "Erro ao criar cliente", "400", e.getMessage()
+            );
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping
