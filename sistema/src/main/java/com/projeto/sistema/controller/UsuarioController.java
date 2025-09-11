@@ -69,7 +69,7 @@ public class UsuarioController {
         @ApiResponse(responseCode = "200", description = "Usuário atualizado"),
         @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
-    public ResponseEntity<Usuario> atualizar(@PathVariable Long id, @RequestBody UsuarioUpdateDto usuarioDto) {
+    public ResponseEntity<Usuario> atualizar(@PathVariable Long id, @RequestBody @Valid UsuarioUpdateDto usuarioDto) {
         return usuarioService.atualizar(id, usuarioDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
