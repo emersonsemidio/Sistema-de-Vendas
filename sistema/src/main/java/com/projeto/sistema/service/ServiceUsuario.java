@@ -1,10 +1,7 @@
 package com.projeto.sistema.service;
 
-import com.projeto.sistema.dto.ClienteRegisterDto;
-import com.projeto.sistema.dto.ClienteUpdateDTO;
 import com.projeto.sistema.dto.UsuarioRegisterDto;
 import com.projeto.sistema.dto.UsuarioUpdateDto;
-import com.projeto.sistema.model.Cliente;
 import com.projeto.sistema.model.Usuario;
 import com.projeto.sistema.repo.RepoUsuario;
 import org.springframework.beans.factory.annotation.Autowired;

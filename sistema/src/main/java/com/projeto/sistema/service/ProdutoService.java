@@ -2,10 +2,7 @@ package com.projeto.sistema.service;
 
 import com.projeto.sistema.dto.ProdutoRegisterDto;
 import com.projeto.sistema.dto.ProdutoUpdateDto;
-import com.projeto.sistema.dto.UsuarioRegisterDto;
-import com.projeto.sistema.dto.UsuarioUpdateDto;
 import com.projeto.sistema.model.Produto;
-import com.projeto.sistema.model.Usuario;
 import com.projeto.sistema.repo.RepoProduto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

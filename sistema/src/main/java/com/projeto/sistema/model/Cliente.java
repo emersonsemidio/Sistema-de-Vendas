@@ -5,7 +5,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "cliente")
@@ -24,8 +23,6 @@ public class Cliente {
   private String endereco;
 
   private String cpf;
-
-  public Cliente() {}
 
 
   // Getters and Setters

@@ -78,7 +78,6 @@ public class ProdutoController {
     @Operation(summary = "Criar novo produto")
     @ApiResponse(responseCode = "200", description = "Produto criado com sucesso")
     public ResponseEntity<MensagemResponseDto> salvar(@RequestBody ProdutoRegisterDto produto) {
-        System.out.println("Recebido produto: " + produto.toString());
         try {
             Produto novoProduto = produtoService.convertRegisterDtoToEntity(produto);
             Produto salvo = produtoService.salvar(novoProduto);

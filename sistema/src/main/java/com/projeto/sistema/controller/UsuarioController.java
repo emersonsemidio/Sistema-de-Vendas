@@ -1,10 +1,8 @@
 package com.projeto.sistema.controller;
 
-import com.projeto.sistema.dto.ClienteRegisterDto;
 import com.projeto.sistema.dto.MensagemResponseDto;
 import com.projeto.sistema.dto.UsuarioRegisterDto;
 import com.projeto.sistema.dto.UsuarioUpdateDto;
-import com.projeto.sistema.model.Cliente;
 import com.projeto.sistema.model.Usuario;
 import com.projeto.sistema.service.ServiceUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +47,6 @@ public class UsuarioController {
     @Operation(summary = "Criar novo usuário")
     @ApiResponse(responseCode = "200", description = "Usuário criado com sucesso")
     public ResponseEntity<MensagemResponseDto> salvar(@RequestBody UsuarioRegisterDto usuarioDto) {
-        System.out.println("Recebido usuário: " + usuarioDto.toString());
         try {
             Usuario usuario = usuarioService.convertRegisterDtoToEntity(usuarioDto);
             Usuario salvo = usuarioService.criar(usuario);
