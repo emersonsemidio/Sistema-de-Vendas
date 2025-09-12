@@ -48,7 +48,8 @@ public class UsuarioController {
     @PostMapping
     @Operation(summary = "Criar novo usuário")
     @ApiResponse(responseCode = "200", description = "Usuário criado com sucesso")
-    public ResponseEntity<MensagemResponseDto> salvar(@RequestBody @Valid UsuarioRegisterDto usuarioDto) {
+    public ResponseEntity<MensagemResponseDto> salvar(@RequestBody UsuarioRegisterDto usuarioDto) {
+        System.out.println("Recebido usuário: " + usuarioDto.toString());
         try {
             Usuario usuario = usuarioService.convertRegisterDtoToEntity(usuarioDto);
             Usuario salvo = usuarioService.criar(usuario);

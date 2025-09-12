@@ -16,7 +16,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 import jakarta.validation.Valid;
 
@@ -79,6 +78,7 @@ public class ProdutoController {
     @Operation(summary = "Criar novo produto")
     @ApiResponse(responseCode = "200", description = "Produto criado com sucesso")
     public ResponseEntity<MensagemResponseDto> salvar(@RequestBody ProdutoRegisterDto produto) {
+        System.out.println("Recebido produto: " + produto.toString());
         try {
             Produto novoProduto = produtoService.convertRegisterDtoToEntity(produto);
             Produto salvo = produtoService.salvar(novoProduto);

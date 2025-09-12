@@ -20,7 +20,7 @@ public class Produto {
   private Double preco;
   private Integer quantidade;
   private String imagemUrl;
-  private String usuarioId;
+  private Long usuarioId;
 
   // Getters and Setters
 
@@ -72,11 +72,11 @@ public class Produto {
     this.imagemUrl = imagemUrl;
   }
 
-  public String getUsuarioId() {
+  public Long getUsuarioId() {
     return usuarioId;
   }
 
-  public void setUsuarioId(String usuarioId) {
+  public void setUsuarioId(Long usuarioId) {
     this.usuarioId = usuarioId;
   }
 
