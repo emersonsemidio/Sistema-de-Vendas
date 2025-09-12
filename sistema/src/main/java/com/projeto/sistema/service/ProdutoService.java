@@ -73,6 +73,7 @@ public class ProdutoService {
         produto.setPreco(dto.getPreco());
         produto.setQuantidade(dto.getQuantidade());
         produto.setImagemUrl(dto.getImagemUrl());
+        produto.setUsuarioId(dto.getUsuarioId());
         return produto;
     }
 

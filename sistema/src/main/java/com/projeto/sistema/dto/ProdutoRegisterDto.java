@@ -16,16 +16,17 @@ public class ProdutoRegisterDto {
   private String descricao;
 
   @NotNull(message = "O campo preço é obrigatorio")
-  @Positive(message = "O campo deve ser um número positivo")
+  @Positive(message = "O campo preço deve ser um número positivo")
   private Double preco;
 
   @NotNull(message = "O campo quantidade é obrigatorio")
-  @Positive(message = "O campo deve ser um número positivo")
+  @Positive(message = "O campo quantidade deve ser um número positivo")
   private Integer quantidade;
 
   @Size(min = 5, max = 100, message = "A URL da imagem deve ter entre 5 e 100 caracteres")
   private String imagemUrl;
 
+  @NotNull(message = "O campo usuarioId é obrigatorio")
   private Long usuarioId;
 
   // Getters and Setters

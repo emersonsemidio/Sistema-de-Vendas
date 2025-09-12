@@ -20,8 +20,6 @@ public class ProdutoUpdateDto {
   @Size(min = 5, max = 100, message = "A URL da imagem deve ter entre 5 e 100 caracteres")
   private String imagemUrl;
 
-  private String usuarioId;
-
   // Getters and Setters
 
   public String getNome() {
@@ -62,14 +60,6 @@ public class ProdutoUpdateDto {
 
   public void setImagemUrl(String imagemUrl) {
     this.imagemUrl = imagemUrl;
-  }
-
-  public String getUsuarioId() {
-    return usuarioId;
-  }
-
-  public void setUsuarioId(String usuarioId) {
-    this.usuarioId = usuarioId;
   }
 
 }
