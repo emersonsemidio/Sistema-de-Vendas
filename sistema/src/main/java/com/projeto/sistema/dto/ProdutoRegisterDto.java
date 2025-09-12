@@ -1,5 +1,7 @@
 package com.projeto.sistema.dto;
 
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -26,7 +28,8 @@ public class ProdutoRegisterDto {
   @Size(min = 5, max = 100, message = "A URL da imagem deve ter entre 5 e 100 caracteres")
   private String imagemUrl;
 
-  
+  @ManyToOne
+  @JoinColumn(name = "usuario_id", nullable = true)
   private String usuarioId;
 
   // Getters and Setters

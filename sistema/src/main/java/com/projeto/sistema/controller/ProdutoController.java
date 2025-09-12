@@ -78,7 +78,7 @@ public class ProdutoController {
     @PostMapping
     @Operation(summary = "Criar novo produto")
     @ApiResponse(responseCode = "200", description = "Produto criado com sucesso")
-    public ResponseEntity<MensagemResponseDto> salvar(@RequestBody @Valid ProdutoRegisterDto produto) {
+    public ResponseEntity<MensagemResponseDto> salvar(@RequestBody ProdutoRegisterDto produto) {
         try {
             Produto novoProduto = produtoService.convertRegisterDtoToEntity(produto);
             Produto salvo = produtoService.salvar(novoProduto);
