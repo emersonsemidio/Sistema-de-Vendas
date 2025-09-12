@@ -1,8 +1,12 @@
 package com.projeto.sistema.controller;
 
+import com.projeto.sistema.dto.MensagemResponseDto;
+import com.projeto.sistema.dto.ProdutoRegisterDto;
+import com.projeto.sistema.dto.ProdutoUpdateDto;
 import com.projeto.sistema.model.Produto;
 import com.projeto.sistema.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,72 +76,34 @@ public class ProdutoController {
     }
 
     @PostMapping
-    @Operation(
-        summary = "Criar novo produto",
-        description = "Cria um novo produto no sistema com validação dos dados"
-    )
-    @ApiResponses(value = {
-        @ApiResponse(
-            responseCode = "200",
-            description = "Produto criado com sucesso",
-            content = @Content(mediaType = "application/json", 
-                             schema = @Schema(implementation = Produto.class))
-        ),
-        @ApiResponse(
-            responseCode = "400",
-            description = "Dados inválidos fornecidos"
-        ),
-        @ApiResponse(
-            responseCode = "500",
-            description = "Erro interno no servidor"
-        )
-    })
-    public ResponseEntity<Produto> criarProduto(
-        @RequestBody(
-            description = "Dados do produto a ser criado",
-            required = true,
-            content = @Content(schema = @Schema(implementation = Produto.class))
-        )
-        @Valid @org.springframework.web.bind.annotation.RequestBody Produto produto) {
-        Produto novoProduto = produtoService.salvar(produto);
-        return ResponseEntity.ok(novoProduto);
+    @Operation(summary = "Criar novo produto")
+    @ApiResponse(responseCode = "200", description = "Produto criado com sucesso")
+    public ResponseEntity<MensagemResponseDto> salvar(@RequestBody @Valid ProdutoRegisterDto produto) {
+        try {
+            Produto novoProduto = produtoService.convertRegisterDtoToEntity(produto);
+            Produto salvo = produtoService.salvar(novoProduto);
+            MensagemResponseDto mensagem = new MensagemResponseDto("Produto criado com sucesso", "200", salvo);
+            return ResponseEntity.ok(mensagem);
+
+        } catch (Exception e) {
+            MensagemResponseDto errorResponse = new MensagemResponseDto(
+                "Erro ao criar produto", "400", e.getMessage()
+            );
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
     }
 
+
     @PutMapping("/{id}")
-    @Operation(
-        summary = "Atualizar produto existente",
-        description = "Atualiza os dados de um produto existente baseado no ID"
-    )
+    @Operation(summary = "Atualizar produto")
     @ApiResponses(value = {
-        @ApiResponse(
-            responseCode = "200",
-            description = "Produto atualizado com sucesso",
-            content = @Content(mediaType = "application/json", 
-                             schema = @Schema(implementation = Produto.class))
-        ),
-        @ApiResponse(
-            responseCode = "404",
-            description = "Produto não encontrado"
-        ),
-        @ApiResponse(
-            responseCode = "400",
-            description = "Dados inválidos fornecidos"
-        )
+        @ApiResponse(responseCode = "200", description = "Produto atualizado"),
+        @ApiResponse(responseCode = "404", description = "Produto não encontrado")
     })
-    public ResponseEntity<Produto> atualizarProduto(
-        @PathVariable Long id,
-        @RequestBody(
-            description = "Novos dados do produto",
-            required = true,
-            content = @Content(schema = @Schema(implementation = Produto.class))
-        )
-        @Valid @org.springframework.web.bind.annotation.RequestBody Produto produto) {
-        Produto atualizado = produtoService.atualizar(id, produto);
-        if (atualizado != null) {
-            return ResponseEntity.ok(atualizado);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Produto> atualizar(@PathVariable Long id, @RequestBody @Valid ProdutoUpdateDto produtoDto) {
+        return produtoService.atualizar(id, produtoDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

@@ -1,6 +1,11 @@
 package com.projeto.sistema.service;
 
+import com.projeto.sistema.dto.ProdutoRegisterDto;
+import com.projeto.sistema.dto.ProdutoUpdateDto;
+import com.projeto.sistema.dto.UsuarioRegisterDto;
+import com.projeto.sistema.dto.UsuarioUpdateDto;
 import com.projeto.sistema.model.Produto;
+import com.projeto.sistema.model.Usuario;
 import com.projeto.sistema.repo.RepoProduto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,18 +34,49 @@ public class ProdutoService {
     }
 
     // Atualizar produto existente
-    public Produto atualizar(Long id, Produto produtoAtualizado) {
-        Optional<Produto> optionalProduto = produtoRepository.findById(id);
-        if (optionalProduto.isPresent()) {
-            Produto existente = optionalProduto.get();
-            existente.setNome(produtoAtualizado.getNome());
-            existente.setDescricao(produtoAtualizado.getDescricao());
-            existente.setPreco(produtoAtualizado.getPreco());
-            existente.setQuantidade(produtoAtualizado.getQuantidade());
-            return produtoRepository.save(existente);
-        } else {
-            return null;
-        }
+    public Optional<Produto> atualizar(Long id, ProdutoUpdateDto dto) {
+        return produtoRepository.findById(id).map(produtoExistente -> {
+
+            if (dto.getNome() != null) {
+                produtoExistente.setNome(dto.getNome());
+            }
+            if (dto.getDescricao() != null) {
+                produtoExistente.setDescricao(dto.getDescricao());
+            }
+            if (dto.getPreco() != null) {
+                produtoExistente.setPreco(dto.getPreco());
+            }
+            if (dto.getQuantidade() != null) {
+                produtoExistente.setQuantidade(dto.getQuantidade());
+            }
+            if (dto.getImagemUrl() != null) {
+                produtoExistente.setImagemUrl(dto.getImagemUrl());
+            }
+
+            return produtoRepository.save(produtoExistente);
+        });
+    }
+
+    public Produto convertUpdateDtoToEntity(ProdutoUpdateDto dto) {
+        Produto produto = new Produto();
+        // Apenas seta os campos que vieram no DTO
+        produto.setNome(dto.getNome()); // Pode ser null - não problema
+        produto.setDescricao(dto.getDescricao());
+        produto.setPreco(dto.getPreco());
+        produto.setQuantidade(dto.getQuantidade());
+        produto.setImagemUrl(dto.getImagemUrl());
+        return produto;
+    }
+
+    public Produto convertRegisterDtoToEntity(ProdutoRegisterDto dto) {
+        Produto produto = new Produto();
+        // Apenas seta os campos que vieram no DTO
+        produto.setNome(dto.getNome()); // Pode ser null - não problema
+        produto.setDescricao(dto.getDescricao());
+        produto.setPreco(dto.getPreco());
+        produto.setQuantidade(dto.getQuantidade());
+        produto.setImagemUrl(dto.getImagemUrl());
+        return produto;
     }
 
     // Deletar produto por ID
