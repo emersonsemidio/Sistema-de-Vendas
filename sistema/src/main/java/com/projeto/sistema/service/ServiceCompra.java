@@ -1,6 +1,6 @@
 package com.projeto.sistema.service;
 
-import com.projeto.sistema.model.Compras;
+import com.projeto.sistema.model.Compra;
 import com.projeto.sistema.repo.RepoCompra;
 import com.projeto.sistema.repo.RepoCliente;
 import com.projeto.sistema.repo.RepoUsuario;
@@ -22,15 +22,15 @@ public class ServiceCompra {
     @Autowired
     private RepoCliente repoCliente;
 
-    public Iterable<Compras> listarTodas() {
+    public Iterable<Compra> listarTodas() {
         return repoCompra.findAll();
     }
 
-    public Optional<Compras> buscarPorId(Long id) {
+    public Optional<Compra> buscarPorId(Long id) {
         return repoCompra.findById(id);
     }
 
-    public Compras salvar(Compras venda) {
+    public Compra salvar(Compra venda) {
     boolean clienteExiste = repoCliente.existsById(venda.getClienteId());
     boolean usuarioExiste = repoUsuario.existsById(venda.getUsuarioId());
 
@@ -46,7 +46,7 @@ public class ServiceCompra {
 }
 
 
-    public Optional<Compras> atualizar(Long id, Compras novaCompra) {
+    public Optional<Compra> atualizar(Long id, Compra novaCompra) {
         return repoCompra.findById(id).map(compraExistente -> {
             compraExistente.setClienteId(novaCompra.getClienteId());
             compraExistente.setTotal(novaCompra.getTotal());

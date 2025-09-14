@@ -1,6 +1,6 @@
 package com.projeto.sistema.controller;
 
-import com.projeto.sistema.model.Compras;
+import com.projeto.sistema.model.Compra;
 import com.projeto.sistema.service.ServiceCompra;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class CompraController {
     @GetMapping
     @Operation(summary = "Listar todas as compras")
     @ApiResponse(responseCode = "200", description = "Compras listadas com sucesso")
-    public ResponseEntity<Iterable<Compras>> listarTodas() {
+    public ResponseEntity<Iterable<Compra>> listarTodas() {
         return ResponseEntity.ok(serviceCompra.listarTodas());
     }
 
@@ -35,8 +35,8 @@ public class CompraController {
         @ApiResponse(responseCode = "200", description = "Compra encontrada"),
         @ApiResponse(responseCode = "404", description = "Compra não encontrada")
     })
-    public ResponseEntity<Compras> buscarPorId(@PathVariable Long id) {
-        Optional<Compras> compra = serviceCompra.buscarPorId(id);
+    public ResponseEntity<Compra> buscarPorId(@PathVariable Long id) {
+        Optional<Compra> compra = serviceCompra.buscarPorId(id);
         return compra.map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -44,8 +44,8 @@ public class CompraController {
     @PostMapping
     @Operation(summary = "Criar nova compra")
     @ApiResponse(responseCode = "200", description = "Compra criada com sucesso")
-    public ResponseEntity<Compras> criar(@RequestBody Compras compra) {
-        Compras compraNova = serviceCompra.salvar(compra);
+    public ResponseEntity<Compra> criar(@RequestBody Compra compra) {
+        Compra compraNova = serviceCompra.salvar(compra);
         return ResponseEntity.ok(compraNova);
     }
 
@@ -55,7 +55,7 @@ public class CompraController {
         @ApiResponse(responseCode = "200", description = "Compra atualizada"),
         @ApiResponse(responseCode = "404", description = "Compra não encontrada")
     })
-    public ResponseEntity<Compras> atualizar(@PathVariable Long id, @RequestBody Compras novaCompra) {
+    public ResponseEntity<Compra> atualizar(@PathVariable Long id, @RequestBody Compra novaCompra) {
         return serviceCompra.atualizar(id, novaCompra)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
