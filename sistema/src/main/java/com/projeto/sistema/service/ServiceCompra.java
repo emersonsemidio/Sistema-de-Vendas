@@ -30,27 +30,27 @@ public class ServiceCompra {
         return repoCompra.findById(id);
     }
 
-    public Compra salvar(Compra venda) {
-    boolean clienteExiste = repoCliente.existsById(venda.getClienteId());
-    boolean usuarioExiste = repoUsuario.existsById(venda.getUsuarioId());
+    public Compra salvar(Compra compra) {
+    boolean clienteExiste = repoCliente.existsById(compra.getCliente().getId());
+    boolean usuarioExiste = repoUsuario.existsById(compra.getUsuario().getId());
 
     if (!clienteExiste && !usuarioExiste) {
-        throw new IllegalArgumentException("Cliente com ID " + venda.getClienteId() + " e Usuário com ID " + venda.getUsuarioId() + " não existem.");
+        throw new IllegalArgumentException("Cliente com ID " + compra.getCliente().getId() + " e Usuário com ID " + compra.getUsuario().getId() + " não existem.");
     } else if (!clienteExiste) {
-        throw new IllegalArgumentException("Cliente com ID " + venda.getClienteId() + " não existe.");
+        throw new IllegalArgumentException("Cliente com ID " + compra.getCliente().getId() + " não existe.");
     } else if (!usuarioExiste) {
-        throw new IllegalArgumentException("Usuário com ID " + venda.getUsuarioId() + " não existe.");
+        throw new IllegalArgumentException("Usuário com ID " + compra.getUsuario().getId() + " não existe.");
     }
 
-    return repoCompra.save(venda);
+    return repoCompra.save(compra);
 }
 
 
     public Optional<Compra> atualizar(Long id, Compra novaCompra) {
         return repoCompra.findById(id).map(compraExistente -> {
-            compraExistente.setClienteId(novaCompra.getClienteId());
+            compraExistente.setCliente(novaCompra.getCliente());
             compraExistente.setTotal(novaCompra.getTotal());
-            compraExistente.setUsuarioId(novaCompra.getUsuarioId());
+            compraExistente.setUsuario(novaCompra.getUsuario());
             compraExistente.setFormaPagamento(novaCompra.getFormaPagamento());
             compraExistente.setStatus(novaCompra.getStatus());
             return repoCompra.save(compraExistente);

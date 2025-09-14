@@ -1,6 +1,8 @@
 package com.projeto.sistema.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
@@ -13,7 +15,10 @@ public class ItemVenda {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private Long produtoId;
+
+  @ManyToOne
+  @JoinColumn(name = "produto_id")
+  private Produto produto;
 
   @NotBlank(message = "O campo é obrigatorio")
   @Size(min = 1, message = "A quantidade deve ser pelo menos 1")
@@ -33,12 +38,12 @@ public class ItemVenda {
     this.id = id;
   }
 
-  public Long getProdutoId() {
-    return produtoId;
+  public Produto getProduto() {
+    return produto;
   }
 
-  public void setProdutoId(Long produtoId) {
-    this.produtoId = produtoId;
+  public void setProduto(Produto produto) {
+    this.produto = produto;
   }
 
   public Integer getQuantidade() {

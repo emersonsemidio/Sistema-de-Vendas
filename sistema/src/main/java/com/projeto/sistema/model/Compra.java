@@ -1,5 +1,7 @@
 package com.projeto.sistema.model;
 
+import java.util.List;
+
 import com.projeto.sistema.Enum.FormaPagamento;
 import com.projeto.sistema.Enum.StatusPedido;
 
@@ -10,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "compras")
@@ -17,14 +20,15 @@ public class Compra {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private Long clienteId;
+  private Cliente cliente;
 
   @NotBlank(message = "O campo é obrigatorio")
   @Size(min = 1, message = "O total deve ser pelo menos 1")
   private Double total;
-  private Long usuarioId;
+  private Usuario usuario;
   private FormaPagamento formaPagamento;
   private StatusPedido status;
+  private List <ItemVenda> itens = new ArrayList<>();
   
   // Getters and Setters
 
@@ -36,12 +40,12 @@ public class Compra {
     this.id = id;
   }
 
-  public Long getClienteId() {
-    return clienteId;
+  public Cliente getCliente() {
+    return cliente;
   }
 
-  public void setClienteId(Long clienteId) {
-    this.clienteId = clienteId;
+  public void setCliente(Cliente cliente) {
+    this.cliente = cliente;
   }
 
   public Double getTotal() {
@@ -69,15 +73,20 @@ public class Compra {
   }
 
 
-  public Long getUsuarioId() {
-    return usuarioId;
+  public Usuario getUsuario() {
+    return usuario;
   }
 
-  public void setUsuarioId(Long usuarioId) {
-    this.usuarioId = usuarioId;
+  public void setUsuario(Usuario usuario) {
+    this.usuario = usuario;
   }
 
+  public List<ItemVenda> getItens() {
+    return itens;
+  }
 
-
+  public void setItens(List<ItemVenda> itens) {
+    this.itens = itens;
+  }
 
 }
