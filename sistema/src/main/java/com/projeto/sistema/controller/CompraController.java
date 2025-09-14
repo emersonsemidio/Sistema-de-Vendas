@@ -1,9 +1,16 @@
 package com.projeto.sistema.controller;
 
+import com.projeto.sistema.dto.CompraRegisterDto;
+import com.projeto.sistema.dto.MensagemResponseDto;
+import com.projeto.sistema.dto.ProdutoRegisterDto;
 import com.projeto.sistema.model.Compra;
+import com.projeto.sistema.model.Produto;
+import com.projeto.sistema.service.ServiceCliente;
 import com.projeto.sistema.service.ServiceCompra;
+import com.projeto.sistema.service.ServiceUsuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +18,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
+import java.security.Provider.Service;
 import java.util.Optional;
 
 @RestController
@@ -41,12 +50,22 @@ public class CompraController {
                     .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+        @PostMapping
     @Operation(summary = "Criar nova compra")
     @ApiResponse(responseCode = "200", description = "Compra criada com sucesso")
-    public ResponseEntity<Compra> criar(@RequestBody Compra compra) {
-        Compra compraNova = serviceCompra.salvar(compra);
-        return ResponseEntity.ok(compraNova);
+    public ResponseEntity<MensagemResponseDto> salvar(@RequestBody @Valid CompraRegisterDto compraDto) {
+        try {
+            Compra novaCompra = serviceCompra.convertRegisterDtoToEntity(compraDto);
+            Compra salva = serviceCompra.salvar(novaCompra);
+            MensagemResponseDto mensagem = new MensagemResponseDto("Compra criada com sucesso", "200", salva);
+            return ResponseEntity.ok(mensagem);
+
+        } catch (Exception e) {
+            MensagemResponseDto errorResponse = new MensagemResponseDto(
+                "Erro ao criar compra", "400", e.getMessage()
+            );
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{id}")
