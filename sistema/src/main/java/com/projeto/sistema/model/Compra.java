@@ -46,6 +46,11 @@ public class Compra {
   @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ItemVenda> itens = new ArrayList<>();
 
+  public void adicionarItem(ItemVenda item) {
+      itens.add(item);
+      item.setCompra(this);
+  }
+
   // Getters and Setters
 
   public Long getId() {

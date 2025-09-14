@@ -14,6 +14,8 @@ import com.projeto.sistema.repo.RepoProduto;
 import com.projeto.sistema.repo.RepoCliente;
 import com.projeto.sistema.repo.RepoUsuario;
 
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,33 +46,21 @@ public class ServiceCompra {
         return repoCompra.findById(id);
     }
 
+    @Transactional
     public Compra salvar(Compra compra) {
-        boolean clienteExiste = repoCliente.existsById(compra.getCliente().getId());
-        boolean usuarioExiste = repoUsuario.existsById(compra.getUsuario().getId());
-
-        if (!clienteExiste && !usuarioExiste) {
-            throw new IllegalArgumentException("Cliente com ID " + compra.getCliente().getId() + " e Usuário com ID " + compra.getUsuario().getId() + " não existem.");
-        } else if (!clienteExiste) {
-            throw new IllegalArgumentException("Cliente com ID " + compra.getCliente().getId() + " não existe.");
-        } else if (!usuarioExiste) {
-            throw new IllegalArgumentException("Usuário com ID " + compra.getUsuario().getId() + " não existe.");
-        }
-
         return repoCompra.save(compra);
     }
 
 
     public Optional<Compra> atualizar(Long id, Compra novaCompra) {
         return repoCompra.findById(id).map(compraExistente -> {
-            compraExistente.setCliente(novaCompra.getCliente());
-            compraExistente.setTotal(novaCompra.getTotal());
-            compraExistente.setUsuario(novaCompra.getUsuario());
             compraExistente.setFormaPagamento(novaCompra.getFormaPagamento());
             compraExistente.setStatus(novaCompra.getStatus());
             return repoCompra.save(compraExistente);
         });
     }
 
+    @Transactional
     public Compra convertRegisterDtoToEntity(CompraRegisterDto dto) {
         Compra compra = new Compra();
         Cliente cliente = repoCliente.findById(dto.getClienteId())
@@ -81,9 +71,14 @@ public class ServiceCompra {
         compra.setCliente(cliente);
         compra.setUsuario(usuario);
         compra.setFormaPagamento(dto.getFormaPagamento());
-        compra.setItens(converterItensDtoParaEntidade(dto.getItens()));
         compra.setTotal(calcularTotalCompra(dto.getItens()));
         compra.setStatus(StatusPedido.PENDENTE);
+
+        List<ItemVenda> itens = converterItensDtoParaEntidade(dto.getItens());
+        for (ItemVenda item : itens) {
+            compra.adicionarItem(item);
+        }
+
         return compra;
     }
 
@@ -104,7 +99,7 @@ public class ServiceCompra {
         
         for (ItemVendaDto itemDto : itensDto) {
             ItemVenda item = new ItemVenda();
-            Produto produto =   repoProduto.findById(itemDto.getProdutoId())
+            Produto produto = repoProduto.findById(itemDto.getProdutoId())
                     .orElseThrow(() -> new RuntimeException("Produto com ID " + itemDto.getProdutoId() + " não encontrado"));
             item.setProduto(produto);
             item.setQuantidade(itemDto.getQuantidade());

@@ -1,4 +1,6 @@
 package com.projeto.sistema.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -32,6 +34,7 @@ public class ItemVenda {
 
   @ManyToOne
   @JoinColumn(name = "compra_id")
+  @JsonIgnore
   private Compra compra;
 
   // Getters and Setters
@@ -67,6 +70,14 @@ public class ItemVenda {
 
   public void setPrecoUnitario(Double precoUnitario) {
     this.precoUnitario = precoUnitario;
+  }
+
+  public Compra getCompra() {
+    return compra;
+  }
+
+  public void setCompra(Compra compra) {
+    this.compra = compra;
   }
   
 }
