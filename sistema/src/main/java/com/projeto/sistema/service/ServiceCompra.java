@@ -1,5 +1,6 @@
 package com.projeto.sistema.service;
 
+import com.projeto.sistema.Enum.StatusPedido;
 import com.projeto.sistema.dto.ClienteRegisterDto;
 import com.projeto.sistema.dto.CompraRegisterDto;
 import com.projeto.sistema.dto.ItemVendaDto;
@@ -82,6 +83,7 @@ public class ServiceCompra {
         compra.setFormaPagamento(dto.getFormaPagamento());
         compra.setItens(converterItensDtoParaEntidade(dto.getItens()));
         compra.setTotal(calcularTotalCompra(dto.getItens()));
+        compra.setStatus(StatusPedido.PENDENTE);
         return compra;
     }
 

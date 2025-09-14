@@ -5,8 +5,14 @@ import java.util.List;
 import com.projeto.sistema.Enum.FormaPagamento;
 import com.projeto.sistema.Enum.StatusPedido;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
@@ -20,16 +26,26 @@ public class Compra {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @ManyToOne
+  @JoinColumn(name = "cliente_id")
   private Cliente cliente;
 
-  @NotBlank(message = "O campo é obrigatorio")
-  @Size(min = 1, message = "O total deve ser pelo menos 1")
   private Double total;
+
+  @ManyToOne
+  @JoinColumn(name = "usuario_id")
   private Usuario usuario;
+
+  @Enumerated(EnumType.STRING)
   private FormaPagamento formaPagamento;
+
+  @Enumerated(EnumType.STRING)
   private StatusPedido status;
-  private List <ItemVenda> itens = new ArrayList<>();
   
+  @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<ItemVenda> itens = new ArrayList<>();
+
   // Getters and Setters
 
   public Long getId() {
