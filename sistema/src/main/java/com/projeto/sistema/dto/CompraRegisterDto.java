@@ -4,15 +4,24 @@ import java.util.List;
 
 import com.projeto.sistema.Enum.FormaPagamento;
 import com.projeto.sistema.Enum.StatusPedido;
+
+import jakarta.validation.constraints.Min;
 import java.util.ArrayList;
- 
+import jakarta.validation.constraints.NotNull;
 
 public class CompraRegisterDto {
   private Long clienteId;
   private Double total;
+
+  @NotNull(message = "O campo Usuário é obrigatorio")
+  @Min(value = 1, message = "O ID do usuário deve ser pelo menos 1")
   private Long usuarioId;
+
+  @NotNull(message = "O campo forma de pagamento é obrigatorio")
   private FormaPagamento formaPagamento;
   private StatusPedido status;
+
+  @NotNull(message = "O campo itens é obrigatorio")
   private List <ItemVendaDto> itens = new ArrayList<>();
   
   // Getters and Setters
