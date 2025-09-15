@@ -17,7 +17,7 @@ public class CompraRegisterDto {
 
   @NotNull(message = "O campo Usuário é obrigatorio")
   @Min(value = 1, message = "O ID do usuário deve ser pelo menos 1")
-  private Long usuarioId;
+  private Long mercadoId;
 
   @NotNull(message = "O campo forma de pagamento é obrigatorio")
   private FormaPagamento formaPagamento;
@@ -37,12 +37,12 @@ public class CompraRegisterDto {
     this.clienteId = clienteId;
   }
 
-  public Long getUsuarioId() {
-    return usuarioId;
+  public Long getMercadoId() {
+    return mercadoId;
   }
 
-  public void setUsuarioId(Long usuarioId) {
-    this.usuarioId = usuarioId;
+  public void setMercadoId(Long usuarioId) {
+    this.mercadoId = usuarioId;
   }
 
   public Double getTotal() {

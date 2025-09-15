@@ -1,10 +1,10 @@
 package com.projeto.sistema.controller;
 
 import com.projeto.sistema.dto.MensagemResponseDto;
-import com.projeto.sistema.dto.UsuarioRegisterDto;
+import com.projeto.sistema.dto.MercadoRegisterDto;
 import com.projeto.sistema.dto.UsuarioUpdateDto;
-import com.projeto.sistema.model.Usuario;
-import com.projeto.sistema.service.ServiceUsuario;
+import com.projeto.sistema.model.Mercado;
+import com.projeto.sistema.service.ServiceMercado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,28 +17,28 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/usuarios")
-@Tag(name = "Usuários", description = "Operações de CRUD para gerenciamento de usuários")
-public class UsuarioController {
+@RequestMapping("/mercados")
+@Tag(name = "Mercados", description = "Operações de CRUD para gerenciamento de mercados")
+public class MercadoController {
 
     @Autowired
-    private ServiceUsuario usuarioService;
+    private ServiceMercado mercadoService;
 
     @GetMapping
-    @Operation(summary = "Listar todos os usuários")
-    @ApiResponse(responseCode = "200", description = "Usuários listados com sucesso")
-    public ResponseEntity<Iterable<Usuario>> listarTodos() {
-        return ResponseEntity.ok(usuarioService.listarTodos());
+    @Operation(summary = "Listar todos os mercados")
+    @ApiResponse(responseCode = "200", description = "Mercados listados com sucesso")
+    public ResponseEntity<Iterable<Mercado>> listarTodos() {
+        return ResponseEntity.ok(mercadoService.listarTodos());
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar usuário por ID")
+    @Operation(summary = "Buscar mercado por ID")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Usuário encontrado"),
-        @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+        @ApiResponse(responseCode = "200", description = "Mercado encontrado"),
+        @ApiResponse(responseCode = "404", description = "Mercado não encontrado")
     })
-    public ResponseEntity<Usuario> buscarPorId(@PathVariable Long id) {
-        return usuarioService.buscarPorId(id)
+    public ResponseEntity<Mercado> buscarPorId(@PathVariable Long id) {
+        return mercadoService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -46,16 +46,16 @@ public class UsuarioController {
     @PostMapping
     @Operation(summary = "Criar novo usuário")
     @ApiResponse(responseCode = "200", description = "Usuário criado com sucesso")
-    public ResponseEntity<MensagemResponseDto> salvar(@RequestBody UsuarioRegisterDto usuarioDto) {
+    public ResponseEntity<MensagemResponseDto> salvar(@RequestBody MercadoRegisterDto usuarioDto) {
         try {
-            Usuario usuario = usuarioService.convertRegisterDtoToEntity(usuarioDto);
-            Usuario salvo = usuarioService.criar(usuario);
-            MensagemResponseDto mensagem = new MensagemResponseDto("Usuário criado com sucesso", "200", salvo);
+            Mercado mercado = mercadoService.convertRegisterDtoToEntity(usuarioDto);
+            Mercado salvo = mercadoService.criar(mercado);
+            MensagemResponseDto mensagem = new MensagemResponseDto("Mercado criado com sucesso", "200", salvo);
             return ResponseEntity.ok(mensagem);
 
         } catch (Exception e) {
             MensagemResponseDto errorResponse = new MensagemResponseDto(
-                "Erro ao criar usuário", "400", e.getMessage()
+                "Erro ao criar mercado", "400", e.getMessage()
             );
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
@@ -67,8 +67,8 @@ public class UsuarioController {
         @ApiResponse(responseCode = "200", description = "Usuário atualizado"),
         @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
-    public ResponseEntity<Usuario> atualizar(@PathVariable Long id, @RequestBody @Valid UsuarioUpdateDto usuarioDto) {
-        return usuarioService.atualizar(id, usuarioDto)
+    public ResponseEntity<Mercado> atualizar(@PathVariable Long id, @RequestBody @Valid UsuarioUpdateDto usuarioDto) {
+        return mercadoService.atualizar(id, usuarioDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -80,7 +80,7 @@ public class UsuarioController {
         @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        if (usuarioService.deletar(id)) {
+        if (mercadoService.deletar(id)) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();

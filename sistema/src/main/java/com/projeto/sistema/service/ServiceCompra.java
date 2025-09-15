@@ -8,11 +8,11 @@ import com.projeto.sistema.model.Cliente;
 import com.projeto.sistema.model.Compra;
 import com.projeto.sistema.model.ItemVenda;
 import com.projeto.sistema.model.Produto;
-import com.projeto.sistema.model.Usuario;
+import com.projeto.sistema.model.Mercado;
 import com.projeto.sistema.repo.RepoCompra;
 import com.projeto.sistema.repo.RepoProduto;
 import com.projeto.sistema.repo.RepoCliente;
-import com.projeto.sistema.repo.RepoUsuario;
+import com.projeto.sistema.repo.RepoMercado;
 
 import jakarta.transaction.Transactional;
 
@@ -30,7 +30,7 @@ public class ServiceCompra {
     private RepoCompra repoCompra;
 
     @Autowired
-    private RepoUsuario repoUsuario;
+    private RepoMercado repoMercado;
 
     @Autowired
     private RepoCliente repoCliente;
@@ -64,12 +64,12 @@ public class ServiceCompra {
     public Compra convertRegisterDtoToEntity(CompraRegisterDto dto) {
         Compra compra = new Compra();
         Cliente cliente = repoCliente.findById(dto.getClienteId())
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));        
-        Usuario usuario = repoUsuario.findById(dto.getUsuarioId())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        Mercado mercado = repoMercado.findById(dto.getMercadoId())
+                .orElseThrow(() -> new RuntimeException("Mercado não encontrado"));
         // Apenas seta os campos que vieram no DTO
         compra.setCliente(cliente);
-        compra.setUsuario(usuario);
+        compra.setMercado(mercado);
         compra.setFormaPagamento(dto.getFormaPagamento());
         compra.setTotal(calcularTotalCompra(dto.getItens()));
         compra.setStatus(StatusPedido.PENDENTE);

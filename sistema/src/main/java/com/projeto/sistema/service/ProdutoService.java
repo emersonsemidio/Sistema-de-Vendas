@@ -2,7 +2,9 @@ package com.projeto.sistema.service;
 
 import com.projeto.sistema.dto.ProdutoRegisterDto;
 import com.projeto.sistema.dto.ProdutoUpdateDto;
+import com.projeto.sistema.model.Mercado;
 import com.projeto.sistema.model.Produto;
+import com.projeto.sistema.repo.RepoMercado;
 import com.projeto.sistema.repo.RepoProduto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ public class ProdutoService {
 
     @Autowired
     private RepoProduto produtoRepository;
+
+    @Autowired
+    private RepoMercado repoMercado;
 
     // Listar todos os produtos
     public Iterable<Produto> listarTodos() {
@@ -65,15 +70,19 @@ public class ProdutoService {
         return produto;
     }
 
+
     public Produto convertRegisterDtoToEntity(ProdutoRegisterDto dto) {
         Produto produto = new Produto();
+
+        Mercado mercado = repoMercado.findById(dto.getMercadoId())
+                .orElseThrow(() -> new RuntimeException("Mercado não encontrado"));
         // Apenas seta os campos que vieram no DTO
         produto.setNome(dto.getNome()); // Pode ser null - não problema
         produto.setDescricao(dto.getDescricao());
         produto.setPreco(dto.getPreco());
         produto.setQuantidade(dto.getQuantidade());
         produto.setImagemUrl(dto.getImagemUrl());
-        produto.setUsuarioId(dto.getUsuarioId());
+        produto.setMercado(mercado);
         return produto;
     }
 

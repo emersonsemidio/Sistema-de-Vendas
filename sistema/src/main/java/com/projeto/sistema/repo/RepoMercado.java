@@ -5,11 +5,11 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import com.projeto.sistema.model.Usuario;
+import com.projeto.sistema.model.Mercado;
 
 
 @Repository
-public interface RepoUsuario extends CrudRepository<Usuario, Long> {
-  Optional<Usuario> findByEmail(String email);
+public interface RepoMercado extends CrudRepository<Mercado, Long> {
+  Optional<Mercado> findByEmail(String email);
 
 }

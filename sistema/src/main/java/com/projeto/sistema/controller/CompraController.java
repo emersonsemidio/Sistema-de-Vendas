@@ -7,7 +7,7 @@ import com.projeto.sistema.model.Compra;
 import com.projeto.sistema.model.Produto;
 import com.projeto.sistema.service.ServiceCliente;
 import com.projeto.sistema.service.ServiceCompra;
-import com.projeto.sistema.service.ServiceUsuario;
+import com.projeto.sistema.service.ServiceMercado;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

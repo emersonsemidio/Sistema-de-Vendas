@@ -5,7 +5,7 @@ import com.projeto.sistema.dto.ProdutoRegisterDto;
 import com.projeto.sistema.dto.ProdutoUpdateDto;
 import com.projeto.sistema.model.Produto;
 import com.projeto.sistema.service.ProdutoService;
-import com.projeto.sistema.service.ServiceUsuario;
+import com.projeto.sistema.service.ServiceMercado;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ public class ProdutoController {
     private ProdutoService produtoService;
 
     @Autowired
-    private ServiceUsuario serviceUsuario;
+    private ServiceMercado serviceUsuario;
 
     @GetMapping
     @Operation(
@@ -84,7 +84,7 @@ public class ProdutoController {
     @ApiResponse(responseCode = "200", description = "Produto criado com sucesso")
     public ResponseEntity<MensagemResponseDto> salvar(@RequestBody @Valid ProdutoRegisterDto produto) {
         try {
-            serviceUsuario.buscarPorId(produto.getUsuarioId()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+            serviceUsuario.buscarPorId(produto.getMercadoId()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
             Produto novoProduto = produtoService.convertRegisterDtoToEntity(produto);
             Produto salvo = produtoService.salvar(novoProduto);
             MensagemResponseDto mensagem = new MensagemResponseDto("Produto criado com sucesso", "200", salvo);

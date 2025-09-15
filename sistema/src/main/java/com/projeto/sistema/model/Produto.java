@@ -1,7 +1,11 @@
 package com.projeto.sistema.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +21,11 @@ public class Produto {
   private Double preco;
   private Integer quantidade;
   private String imagemUrl;
-  private Long usuarioId;
+
+  @ManyToOne
+  @JoinColumn(name = "mercado_id")
+  @JsonIgnore
+  private Mercado mercado;
 
   // Getters and Setters
 
@@ -69,12 +77,12 @@ public class Produto {
     this.imagemUrl = imagemUrl;
   }
 
-  public Long getUsuarioId() {
-    return usuarioId;
+  public Mercado getMercado() {
+    return mercado;
   }
 
-  public void setUsuarioId(Long usuarioId) {
-    this.usuarioId = usuarioId;
+  public void setMercado(Mercado mercado) {
+    this.mercado = mercado;
   }
 
 }

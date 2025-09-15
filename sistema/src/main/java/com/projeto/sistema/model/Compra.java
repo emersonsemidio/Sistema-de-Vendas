@@ -2,6 +2,7 @@ package com.projeto.sistema.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.projeto.sistema.Enum.FormaPagamento;
 import com.projeto.sistema.Enum.StatusPedido;
 
@@ -32,8 +33,8 @@ public class Compra {
   private Cliente cliente;
 
   @ManyToOne
-  @JoinColumn(name = "usuario_id")
-  private Usuario usuario;
+  @JoinColumn(name = "mercado_id")
+  private Mercado mercado;
 
   private Double total;
 
@@ -94,12 +95,12 @@ public class Compra {
   }
 
 
-  public Usuario getUsuario() {
-    return usuario;
+  public Mercado getMercado() {
+    return mercado;
   }
 
-  public void setUsuario(Usuario usuario) {
-    this.usuario = usuario;
+  public void setMercado(Mercado mercado) {
+    this.mercado = mercado;
   }
 
   public List<ItemVenda> getItens() {

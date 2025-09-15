@@ -12,8 +12,8 @@ public interface RepoCompra extends CrudRepository<Compra, Long> {
      // Buscar todas as vendas de um determinado cliente
     List<Compra> findByClienteId(Long clienteId);
 
-    // Buscar todas as vendas feitas por um determinado usuário (vendedor)
-    List<Compra> findByUsuarioId(Long usuarioId);
+    // Buscar todas as vendas feitas por um determinado mercado
+    List<Compra> findByMercadoId(Long mercadoId);
 
     // Buscar vendas por status (Ex: PENDENTE, CONCLUIDA, CANCELADA)
     List<Compra> findByStatus(StatusPedido status);
