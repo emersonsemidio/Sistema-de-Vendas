@@ -102,6 +102,8 @@ public class ServiceCompra {
             Produto produto = repoProduto.findById(itemDto.getProdutoId())
                     .orElseThrow(() -> new RuntimeException("Produto com ID " + itemDto.getProdutoId() + " não encontrado"));
             item.setProduto(produto);
+            produto.setQuantidade(produto.getQuantidade() - itemDto.getQuantidade());
+            repoProduto.save(produto); // Atualiza a quantidade no banco
             item.setQuantidade(itemDto.getQuantidade());
             item.setPrecoUnitario(produto.getPreco());
             itens.add(item);

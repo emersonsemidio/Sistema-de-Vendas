@@ -6,6 +6,8 @@ import com.projeto.sistema.Enum.FormaPagamento;
 import com.projeto.sistema.Enum.StatusPedido;
 
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.ArrayList;
 import jakarta.validation.constraints.NotNull;
 
@@ -21,6 +23,7 @@ public class CompraRegisterDto {
   private FormaPagamento formaPagamento;
   private StatusPedido status;
 
+  @NotEmpty(message = "A lista de itens não pode ser vazia")
   @NotNull(message = "O campo itens é obrigatorio")
   private List <ItemVendaDto> itens = new ArrayList<>();
   

@@ -31,11 +31,11 @@ public class Compra {
   @JoinColumn(name = "cliente_id")
   private Cliente cliente;
 
-  private Double total;
-
   @ManyToOne
   @JoinColumn(name = "usuario_id")
   private Usuario usuario;
+
+  private Double total;
 
   @Enumerated(EnumType.STRING)
   private FormaPagamento formaPagamento;
