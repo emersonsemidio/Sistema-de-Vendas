@@ -23,7 +23,6 @@ public class ProdutoRegisterDto {
   @Positive(message = "O campo quantidade deve ser um número positivo")
   private Integer quantidade;
 
-  @Size(min = 5, max = 100, message = "A URL da imagem deve ter entre 5 e 100 caracteres")
   private String imagemUrl;
 
   @NotNull(message = "O campo usuarioId é obrigatorio")

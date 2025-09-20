@@ -12,4 +12,6 @@ import com.projeto.sistema.model.Mercado;
 public interface RepoMercado extends CrudRepository<Mercado, Long> {
   Optional<Mercado> findByEmail(String email);
 
+  
+
 }

@@ -4,6 +4,7 @@ import com.projeto.sistema.dto.MensagemResponseDto;
 import com.projeto.sistema.dto.MercadoRegisterDto;
 import com.projeto.sistema.dto.UsuarioUpdateDto;
 import com.projeto.sistema.model.Mercado;
+import com.projeto.sistema.model.Produto;
 import com.projeto.sistema.service.ServiceMercado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,13 @@ public class MercadoController {
     @ApiResponse(responseCode = "200", description = "Mercados listados com sucesso")
     public ResponseEntity<Iterable<Mercado>> listarTodos() {
         return ResponseEntity.ok(mercadoService.listarTodos());
+    }
+
+    @GetMapping("/{id}/produtos")
+    @Operation(summary = "Listar todos os produtos de um mercado")
+    @ApiResponse(responseCode = "200", description = "Produtos listados com sucesso")
+    public ResponseEntity<Iterable<Produto>> listarProdutosPorMercado(@PathVariable Long id) {
+        return ResponseEntity.ok(mercadoService.listarProdutosPorMercado(id));
     }
 
     @GetMapping("/{id}")

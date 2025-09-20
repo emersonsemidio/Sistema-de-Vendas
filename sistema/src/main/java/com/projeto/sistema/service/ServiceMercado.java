@@ -3,7 +3,10 @@ package com.projeto.sistema.service;
 import com.projeto.sistema.dto.MercadoRegisterDto;
 import com.projeto.sistema.dto.UsuarioUpdateDto;
 import com.projeto.sistema.model.Mercado;
+import com.projeto.sistema.model.Produto;
 import com.projeto.sistema.repo.RepoMercado;
+import com.projeto.sistema.repo.RepoProduto;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +18,15 @@ public class ServiceMercado {
     @Autowired
     private RepoMercado repoMercado;
 
+    @Autowired
+    private RepoProduto repoProduto;
 
     public Iterable<Mercado> listarTodos() {
         return repoMercado.findAll();
+    }
+
+    public Iterable<Produto> listarProdutosPorMercado(Long mercadoId) {
+        return repoProduto.findByMercadoId(mercadoId).orElseThrow(() -> new RuntimeException("Ocorreu um erro ao buscar produtos para o mercado com ID: " + mercadoId));
     }
 
     public Optional<Mercado> buscarPorId(Long id) {
