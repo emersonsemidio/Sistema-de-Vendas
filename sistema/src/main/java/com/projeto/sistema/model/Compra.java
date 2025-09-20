@@ -45,6 +45,7 @@ public class Compra {
   private StatusPedido status;
   
   @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
   private List<ItemVenda> itens = new ArrayList<>();
 
   public void adicionarItem(ItemVenda item) {

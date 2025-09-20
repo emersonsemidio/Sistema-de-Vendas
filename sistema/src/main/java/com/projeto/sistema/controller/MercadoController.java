@@ -44,11 +44,11 @@ public class MercadoController {
     }
 
     @PostMapping
-    @Operation(summary = "Criar novo usuário")
-    @ApiResponse(responseCode = "200", description = "Usuário criado com sucesso")
-    public ResponseEntity<MensagemResponseDto> salvar(@RequestBody MercadoRegisterDto usuarioDto) {
+    @Operation(summary = "Criar novo Mercado")
+    @ApiResponse(responseCode = "200", description = "Mercado criado com sucesso")
+    public ResponseEntity<MensagemResponseDto> salvar(@RequestBody MercadoRegisterDto mercadoDto) {
         try {
-            Mercado mercado = mercadoService.convertRegisterDtoToEntity(usuarioDto);
+            Mercado mercado = mercadoService.convertRegisterDtoToEntity(mercadoDto);
             Mercado salvo = mercadoService.criar(mercado);
             MensagemResponseDto mensagem = new MensagemResponseDto("Mercado criado com sucesso", "200", salvo);
             return ResponseEntity.ok(mensagem);
@@ -62,10 +62,10 @@ public class MercadoController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Atualizar usuário")
+    @Operation(summary = "Atualizar mercado")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Usuário atualizado"),
-        @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+        @ApiResponse(responseCode = "200", description = "Mercado atualizado"),
+        @ApiResponse(responseCode = "404", description = "Mercado não encontrado")
     })
     public ResponseEntity<Mercado> atualizar(@PathVariable Long id, @RequestBody @Valid UsuarioUpdateDto usuarioDto) {
         return mercadoService.atualizar(id, usuarioDto)
@@ -74,10 +74,10 @@ public class MercadoController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deletar usuário")
+    @Operation(summary = "Deletar mercado")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Usuário deletado"),
-        @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+        @ApiResponse(responseCode = "204", description = "Mercado deletado"),
+        @ApiResponse(responseCode = "404", description = "Mercado não encontrado")
     })
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         if (mercadoService.deletar(id)) {

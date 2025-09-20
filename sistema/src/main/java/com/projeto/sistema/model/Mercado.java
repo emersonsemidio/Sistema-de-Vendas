@@ -3,6 +3,8 @@ package com.projeto.sistema.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -28,6 +30,7 @@ public class Mercado {
     private List<Produto> produtos = new ArrayList<>();
     
     @OneToMany(mappedBy = "mercado", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Compra> compras = new ArrayList<>();
 
     // Getters and Setters
