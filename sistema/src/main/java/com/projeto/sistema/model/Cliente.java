@@ -24,6 +24,16 @@ public class Cliente {
 
   private String cpf;
 
+  public Cliente(Long id, String nome, String email, String cpf, String telefone) {
+    this.id = id;
+    this.nome = nome;
+    this.email = email;
+    this.cpf = cpf;
+    this.telefone = telefone;
+  }
+
+  public Cliente() {
+  }
 
   // Getters and Setters
 
