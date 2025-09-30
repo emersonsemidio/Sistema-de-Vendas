@@ -88,4 +88,6 @@ public class ClienteRegisterDto {
     this.senha = senha;
   }
 
+  
+
 }
