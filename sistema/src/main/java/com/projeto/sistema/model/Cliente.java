@@ -1,9 +1,13 @@
 package com.projeto.sistema.model;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -112,6 +116,7 @@ public class Cliente implements UserDetails {
             '}';
   }
 
+  @JsonIgnore
   public String getSenha() {
     return senha;
   }
@@ -121,16 +126,15 @@ public class Cliente implements UserDetails {
   }
 
   @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
-  }
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER")); // ← CORRIGIDO
+    }
 
-  @Override
-  public String getPassword() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getPassword'");
-  }
+    @Override
+    @JsonIgnore
+    public String getPassword() {
+        return this.senha; // ← CORRIGIDO
+    }
 
   @Override
   public String getUsername() {
