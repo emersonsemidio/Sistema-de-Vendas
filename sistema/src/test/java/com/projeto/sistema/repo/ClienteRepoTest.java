@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 import java.util.Optional;
@@ -90,22 +91,22 @@ class ClienteRepoTest {
         entityManager.persistAndFlush(cliente1);
 
         // Act
-        Optional<Cliente> resultado = repoCliente.findByEmail("joao@email.com");
+        UserDetails resultado = repoCliente.findByEmail("joao@email.com");
 
         // Assert
-        assertTrue(resultado.isPresent());
-        assertEquals(cliente1.getNome(), resultado.get().getNome());
-        assertEquals(cliente1.getEmail(), resultado.get().getEmail());
+        assertNotNull(resultado);
+        assertEquals(cliente1.getNome(), resultado.getUsername());
+        assertEquals(cliente1.getEmail(), ((Cliente) resultado).getEmail());
     }
 
     @Test
     @DisplayName("Deve retornar vazio ao buscar cliente por email inexistente")
     void findByEmail_DeveRetornarVazio_QuandoEmailNaoExistir() {
         // Act
-        Optional<Cliente> resultado = repoCliente.findByEmail("inexistente@email.com");
+        UserDetails resultado = repoCliente.findByEmail("inexistente@email.com");
 
         // Assert
-        assertFalse(resultado.isPresent());
+        assertNull(resultado);
     }
 
     @Test
@@ -204,12 +205,11 @@ class ClienteRepoTest {
         entityManager.persistAndFlush(cliente1);
 
         // Act & Assert - Deve encontrar com email exato
-        Optional<Cliente> resultado1 = repoCliente.findByEmail("joao@email.com");
-        assertTrue(resultado1.isPresent());
-
+        UserDetails resultado1 = repoCliente.findByEmail("joao@email.com");
+        assertNotNull(resultado1);
         // Act & Assert - Não deve encontrar com email diferente (case sensitive)
-        Optional<Cliente> resultado2 = repoCliente.findByEmail("JOAO@EMAIL.COM");
-        assertFalse(resultado2.isPresent());
+        UserDetails resultado2 = repoCliente.findByEmail("JOAO@EMAIL.COM");
+        assertNull(resultado2);
     }
 
     @Test

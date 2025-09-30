@@ -134,13 +134,11 @@ public class Cliente implements UserDetails {
 
   @Override
   public String getUsername() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getUsername'");
+    return email;
   }
 
   @Override
   public boolean isAccountNonExpired() {
-    // TODO Auto-generated method stub
     return true;
   }
 
