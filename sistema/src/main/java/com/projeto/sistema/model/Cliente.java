@@ -24,7 +24,18 @@ public class Cliente {
 
   private String cpf;
 
-  public Cliente(Long id, String nome, String email, String cpf, String telefone) {
+  private String senha;
+
+  public Cliente(Long id, String nome, String email, String cpf, String telefone, String senha) {
+    this.id = id;
+    this.nome = nome;
+    this.email = email;
+    this.cpf = cpf;
+    this.telefone = telefone;
+    this.senha = senha;
+  }
+
+    public Cliente(Long id, String nome, String email, String cpf, String telefone) {
     this.id = id;
     this.nome = nome;
     this.email = email;
@@ -94,6 +105,14 @@ public class Cliente {
             ", endereco='" + endereco + '\'' +
             ", cpf='" + cpf + '\'' +
             '}';
+  }
+
+  public String getSenha() {
+    return senha;
+  }
+
+  public void setSenha(String senha) {
+    this.senha = senha;
   }
 
 }

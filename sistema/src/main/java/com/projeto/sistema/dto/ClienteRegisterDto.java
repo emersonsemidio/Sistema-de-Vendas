@@ -31,6 +31,11 @@ public class ClienteRegisterDto {
   @Size(min = 11, max = 14, message = "O campo deve ter entre 11 e 14 caracteres")
   private String cpf;
 
+  @NotNull
+  @NotBlank(message = "O campo senha é obrigatório")
+  @Size(min = 6, max = 20, message = "O campo deve ter entre 6 e 20 caracteres")
+  private String senha;
+
 
   // Getters and Setters
 
@@ -73,6 +78,14 @@ public class ClienteRegisterDto {
 
   public void setCpf(String cpf) {
     this.cpf = cpf;
+  }
+
+  public String getSenha() {
+    return senha;
+  }
+
+  public void setSenha(String senha) {
+    this.senha = senha;
   }
 
 }

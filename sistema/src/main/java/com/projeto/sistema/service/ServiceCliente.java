@@ -74,6 +74,7 @@ public class ServiceCliente {
         cliente.setTelefone(dto.getTelefone());
         cliente.setEndereco(dto.getEndereco());
         cliente.setCpf(dto.getCpf());
+        cliente.setSenha(dto.getSenha());
         return cliente;
     }
     
