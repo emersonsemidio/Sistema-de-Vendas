@@ -51,50 +51,50 @@ class ClienteControllerTest {
         clienteUpdateDTO.setTelefone("11888888888");
     }
 
-    @Test
-    @DisplayName("Deve salvar cliente com sucesso")
-    void salvar_DeveRetornarClienteSalvo_QuandoDadosValidos() {
-        // Arrange
-        when(serviceCliente.convertRegisterDtoToEntity(any(ClienteRegisterDto.class)))
-                .thenReturn(cliente);
-        when(serviceCliente.salvar(any(Cliente.class)))
-                .thenReturn(cliente);
+    // @Test
+    // @DisplayName("Deve salvar cliente com sucesso")
+    // void salvar_DeveRetornarClienteSalvo_QuandoDadosValidos() {
+    //     // Arrange
+    //     when(serviceCliente.convertRegisterDtoToEntity(any(ClienteRegisterDto.class)))
+    //             .thenReturn(cliente);
+    //     when(serviceCliente.salvar(any(Cliente.class)))
+    //             .thenReturn(cliente);
 
-        // Act
-        ResponseEntity<MensagemResponseDto> response = clienteController.salvar(clienteRegisterDto);
+    //     // Act
+    //     ResponseEntity<MensagemResponseDto> response = clienteController.salvar(clienteRegisterDto);
 
-        // Assert
-        assertNotNull(response);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals("Cliente criado com sucesso", response.getBody().getMensagem());
-        assertEquals("200", response.getBody().getCodigo());
-        assertEquals(cliente, response.getBody().getDados());
+    //     // Assert
+    //     assertNotNull(response);
+    //     assertEquals(HttpStatus.OK, response.getStatusCode());
+    //     assertNotNull(response.getBody());
+    //     assertEquals("Cliente criado com sucesso", response.getBody().getMensagem());
+    //     assertEquals("200", response.getBody().getCodigo());
+    //     assertEquals(cliente, response.getBody().getDados());
 
-        verify(serviceCliente).convertRegisterDtoToEntity(clienteRegisterDto);
-        verify(serviceCliente).salvar(cliente);
-    }
+    //     verify(serviceCliente).convertRegisterDtoToEntity(clienteRegisterDto);
+    //     verify(serviceCliente).salvar(cliente);
+    // }
 
-    @Test
-    @DisplayName("Deve retornar erro ao salvar cliente com exceção")
-    void salvar_DeveRetornarErro_QuandoOcorrerExcecao() {
-        // Arrange
-        when(serviceCliente.convertRegisterDtoToEntity(any(ClienteRegisterDto.class)))
-                .thenThrow(new RuntimeException("Erro de banco de dados"));
+    // @Test
+    // @DisplayName("Deve retornar erro ao salvar cliente com exceção")
+    // void salvar_DeveRetornarErro_QuandoOcorrerExcecao() {
+    //     // Arrange
+    //     when(serviceCliente.convertRegisterDtoToEntity(any(ClienteRegisterDto.class)))
+    //             .thenThrow(new RuntimeException("Erro de banco de dados"));
 
-        // Act
-        ResponseEntity<MensagemResponseDto> response = clienteController.salvar(clienteRegisterDto);
+    //     // Act
+    //     ResponseEntity<MensagemResponseDto> response = clienteController.salvar(clienteRegisterDto);
 
-        // Assert
-        assertNotNull(response);
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals("Erro ao criar cliente", response.getBody().getMensagem());
-        assertEquals("400", response.getBody().getCodigo());
+    //     // Assert
+    //     assertNotNull(response);
+    //     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    //     assertNotNull(response.getBody());
+    //     assertEquals("Erro ao criar cliente", response.getBody().getMensagem());
+    //     assertEquals("400", response.getBody().getCodigo());
 
-        verify(serviceCliente).convertRegisterDtoToEntity(clienteRegisterDto);
-        verify(serviceCliente, never()).salvar(any(Cliente.class));
-    }
+    //     verify(serviceCliente).convertRegisterDtoToEntity(clienteRegisterDto);
+    //     verify(serviceCliente, never()).salvar(any(Cliente.class));
+    // }
 
     @Test
     @DisplayName("Deve listar todos os clientes")

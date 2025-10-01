@@ -25,24 +25,24 @@ public class ClienteController {
     @Autowired
     private ServiceCliente serviceCliente;
 
-    @Valid
-    @PostMapping
-    @Operation(summary = "Criar novo cliente")
-    @ApiResponse(responseCode = "200", description = "Cliente criado com sucesso")
-    public ResponseEntity<MensagemResponseDto> salvar(@RequestBody @Valid ClienteRegisterDto clienteDto) {
-        try {
-            Cliente cliente = serviceCliente.convertRegisterDtoToEntity(clienteDto);
-            Cliente salvo = serviceCliente.salvar(cliente);
-            MensagemResponseDto mensagem = new MensagemResponseDto("Cliente criado com sucesso", "200", salvo);
-            return ResponseEntity.ok(mensagem);
+    // @Valid
+    // @PostMapping
+    // @Operation(summary = "Criar novo cliente")
+    // @ApiResponse(responseCode = "200", description = "Cliente criado com sucesso")
+    // public ResponseEntity<MensagemResponseDto> salvar(@RequestBody @Valid ClienteRegisterDto clienteDto) {
+    //     try {
+    //         Cliente cliente = serviceCliente.convertRegisterDtoToEntity(clienteDto);
+    //         Cliente salvo = serviceCliente.salvar(cliente);
+    //         MensagemResponseDto mensagem = new MensagemResponseDto("Cliente criado com sucesso", "200", salvo);
+    //         return ResponseEntity.ok(mensagem);
 
-        } catch (Exception e) {
-            MensagemResponseDto errorResponse = new MensagemResponseDto(
-                "Erro ao criar cliente", "400", e.getMessage()
-            );
-            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-        }
-    }
+    //     } catch (Exception e) {
+    //         MensagemResponseDto errorResponse = new MensagemResponseDto(
+    //             "Erro ao criar cliente", "400", e.getMessage()
+    //         );
+    //         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    //     }
+    // }
 
     @GetMapping
     @Operation(summary = "Listar todos os clientes")

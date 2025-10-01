@@ -8,6 +8,7 @@ import com.projeto.sistema.repo.RepoCliente;
 import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -68,13 +69,14 @@ public class ServiceCliente {
 
     public Cliente convertRegisterDtoToEntity(ClienteRegisterDto dto) {
         Cliente cliente = new Cliente();
+        String encryptedPassword = new BCryptPasswordEncoder().encode(dto.getSenha());
         // Apenas seta os campos que vieram no DTO
         cliente.setNome(dto.getNome()); // Pode ser null - não problema
         cliente.setEmail(dto.getEmail());
         cliente.setTelefone(dto.getTelefone());
         cliente.setEndereco(dto.getEndereco());
         cliente.setCpf(dto.getCpf());
-        cliente.setSenha(dto.getSenha());
+        cliente.setSenha(encryptedPassword);
         return cliente;
     }
     
