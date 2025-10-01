@@ -3,6 +3,7 @@ package com.projeto.sistema.controller;
 import com.projeto.sistema.dto.CompraRegisterDto;
 import com.projeto.sistema.dto.MensagemResponseDto;
 import com.projeto.sistema.dto.ProdutoRegisterDto;
+import com.projeto.sistema.infra.security.SecurityConfiguration;
 import com.projeto.sistema.model.Compra;
 import com.projeto.sistema.model.Produto;
 import com.projeto.sistema.service.ServiceCliente;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -26,6 +28,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/compra")
 @Tag(name = "Compras", description = "Operações de CRUD para gerenciamento de compras")
+@SecurityRequirement(name = SecurityConfiguration.SECURITY)
 public class CompraController {
 
     @Autowired

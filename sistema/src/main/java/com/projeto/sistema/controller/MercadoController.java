@@ -3,6 +3,7 @@ package com.projeto.sistema.controller;
 import com.projeto.sistema.dto.MensagemResponseDto;
 import com.projeto.sistema.dto.MercadoRegisterDto;
 import com.projeto.sistema.dto.UsuarioUpdateDto;
+import com.projeto.sistema.infra.security.SecurityConfiguration;
 import com.projeto.sistema.model.Mercado;
 import com.projeto.sistema.model.Produto;
 import com.projeto.sistema.service.ServiceMercado;
@@ -14,12 +15,14 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/mercados")
 @Tag(name = "Mercados", description = "Operações de CRUD para gerenciamento de mercados")
+@SecurityRequirement(name = SecurityConfiguration.SECURITY)
 public class MercadoController {
 
     @Autowired

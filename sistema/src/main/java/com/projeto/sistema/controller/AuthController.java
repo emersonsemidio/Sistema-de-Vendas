@@ -52,13 +52,13 @@ public class AuthController {
 
     @PostMapping("/register")
     @Operation(summary = "Criar novo cliente")
-    @ApiResponse(responseCode = "200", description = "Cliente criado com sucesso")
+    @ApiResponse(responseCode = "201", description = "Cliente criado com sucesso")
     public ResponseEntity<MensagemResponseDto> salvar(@RequestBody @Valid ClienteRegisterDto clienteDto) {
         try {
             Cliente cliente = serviceCliente.convertRegisterDtoToEntity(clienteDto);
             Cliente salvo = serviceCliente.salvar(cliente);
-            MensagemResponseDto mensagem = new MensagemResponseDto("Cliente criado com sucesso", "200", salvo);
-            return ResponseEntity.ok(mensagem);
+            MensagemResponseDto mensagem = new MensagemResponseDto("Cliente criado com sucesso", "201", salvo);
+            return ResponseEntity.status(HttpStatus.CREATED).body(mensagem);
 
         } catch (Exception e) {
             MensagemResponseDto errorResponse = new MensagemResponseDto(

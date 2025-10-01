@@ -12,10 +12,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
 @Configuration
 @EnableWebSecurity
+@SecurityScheme(
+    name = SecurityConfiguration.SECURITY,
+    type = SecuritySchemeType.HTTP,
+    scheme = "bearer",
+    bearerFormat = "JWT"
+)
 public class SecurityConfiguration {
+
+  public static final String SECURITY = "bearerAuth";
 
   @Autowired
   private SecurityFilter securityFilter;
